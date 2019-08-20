@@ -1,0 +1,78 @@
+fan:
+  - platform: airx
+    name: airx
+    token: !secret airx_token
+    user_id: !secret airx_user_id
+    device_id: !secret airx_device_id
+  - platform: airx
+    name: airx2
+    token: !secret airx_token
+    user_id: !secret airx_user_id
+    device_id: !secret airx_device2_id
+
+sensor: 
+  - platform: template
+    sensors:
+      airx_pm25:
+        friendly_name: 室内空气PM2.5
+        # icon_template: 'mdi:blur'
+        value_template: '{{ states.fan.airx.attributes.pm25 }}'
+        unit_of_measurement: μg/m³
+      airx_outside_pm25:
+        friendly_name: 室外空气PM2.5
+        # icon_template: 'mdi:blur'
+        value_template: '{{ states.fan.airx.attributes.outside_pm25 }}'
+        unit_of_measurement: μg/m³
+      airx_remain:
+        friendly_name: 滤网剩余寿命
+        # icon_template: 'mdi:chemical-weapon'
+        value_template: '{{ states.fan.airx.attributes.filter_remain }}'
+        unit_of_measurement: '%'
+      airx2_pm25:
+        friendly_name: 室内空气质量
+        # icon_template: 'mdi:blur'
+        value_template: '{{ states.fan.airx2.attributes.pm25 }}'
+        unit_of_measurement: μg/m³
+      airx2_outside_pm25:
+        friendly_name: 室外空气质量
+        # icon_template: 'mdi:blur'
+        value_template: '{{ states.fan.airx2.attributes.outside_pm25 }}'
+        unit_of_measurement: μg/m³
+      airx2_remain:
+        friendly_name: 滤网剩余寿命
+        # icon_template: 'mdi:chemical-weapon'
+        value_template: '{{ states.fan.airx2.attributes.filter_remain }}'
+        unit_of_measurement: '%'
+
+group:
+  airx:
+    name: Airx空气净化器
+    view: no
+    entities:
+      - fan.airx
+      - sensor.airx_pm25
+      - sensor.airx_outside_pm25
+      - sensor.airx_remain
+      - fan.airx2
+      - sensor.airx2_pm25
+      - sensor.airx2_outside_pm25
+      - sensor.airx2_remain
+
+homeassistant:
+  customize:
+    fan.airx:
+      friendly_name: 楼上净化器
+    fan.airx2:
+      friendly_name: 楼下净化器
+    sensor.airx_pm25:
+      icon: 'mdi:blur'
+    sensor.airx_outside_pm25:
+      icon: 'mdi:blur'
+    sensor.airx_remain:
+      icon: 'mdi:chemical-weapon'
+    sensor.airx2_pm25:
+      icon: 'mdi:blur'
+    sensor.airx2_outside_pm25:
+      icon: 'mdi:blur'
+    sensor.airx2_remain:
+      icon: 'mdi:chemical-weapon'

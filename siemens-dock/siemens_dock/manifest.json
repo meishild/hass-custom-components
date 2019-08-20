@@ -1,0 +1,10 @@
+{
+  "domain": "siemens_dock",
+  "name": "siemens_dock",
+  "documentation": "https://github.com/meishild/hass-custom-components/siemens-dock",
+  "dependencies": [],
+  "codeowners": [
+    "@meishild"
+  ],
+  "requirements": []
+}
