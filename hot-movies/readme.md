@@ -18,11 +18,11 @@ sensor:
 # 前台界面
 原始的界面是这样的，只能看到数量
 
-![avatar](https://github.com/aalavender/HotMovies/blob/master/1.PNG)
+![avatar](https://github.com/meishild/hass-custom-components/hot-movies/blob/master/1.PNG)
 
 建议采用[list-card](https://github.com/custom-cards/list-card)进行展示，效果是这样的
 
-![avatar](https://github.com/aalavender/HotMovies/blob/master/2.PNG)
+![avatar](https://github.com/meishild/hass-custom-components/hot-movies/blob/master/2.PNG)
 
 list-card 的lovelace-ui配置：
 ```
