@@ -22,10 +22,14 @@ fix 温差过低导致出现小数的问题。
 * 下载文件，hf_weather目录放置在{HA配置目录}/custom_components/下。
 * 启用hf_weather组件（[要先在api平台申请key](https://wx.jdcloud.com/market/datas/26/10610)）。
 
+由于插件依赖sun这个日落信息，如果没有配置，需要配置sun.
+
 ```yaml
 # 配置 configuration.yaml
+sun：
+
 weather:
-  - platform: hf_weather
+  - platform: hf-weather
     name: test                  # entity_id，自定义
     location: {{YOUR_LOCATION}} # 支持local_ip,根据ip获取，101.21.221.31，指定ip以及22.25,114.1667指定经纬度三种方式。
     appkey: {{YOUR_API_KEY}}    # api平台申请的key
