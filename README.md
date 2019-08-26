@@ -11,3 +11,6 @@ airx的空气净化器插件。
 
 ## siemens-dock
 西门子的空气质量检测。
+
+## apparent-components
+根据温度、湿度计算体感温度
