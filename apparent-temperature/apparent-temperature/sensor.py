@@ -21,7 +21,7 @@ _INTERVAL = 15
 
 SCAN_INTERVAL = datetime.timedelta(seconds=_INTERVAL)
 
-DEFAULT_NAME = 'apparent_temperature'
+DEFAULT_NAME = 'apparent-temperature'
 
 CONF_TS = "temperature_sensor"
 CONF_HS = "humidity_sensor"

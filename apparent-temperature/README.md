@@ -15,7 +15,7 @@ Tv：风速对体感温度的订正值
 配置方式
 ```yaml
 sensor:
-  - platform: apparent_temperature
+  - platform: apparent-temperature
     name: at01
     temperature_sensor: sensor.m1_temperature 
     humidity_sensor: sensor.m1_humidity
