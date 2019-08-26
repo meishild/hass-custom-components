@@ -1,7 +1,7 @@
 {
   "domain": "airx",
   "name": "airx",
-  "documentation": "https://github.com/meishild/hass-custom-components/ha-airx",
+  "documentation": "https://github.com/meishild/hass-custom-components",
   "dependencies": [],
   "codeowners": [
     "@meishild"

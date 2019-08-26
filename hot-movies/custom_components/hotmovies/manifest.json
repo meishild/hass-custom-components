@@ -1,7 +1,7 @@
 {
   "domain": "hotmovies",
   "name": "hotmovies",
-  "documentation": "https://github.com/meishild/hass-custom-components/hot-movies",
+  "documentation": "https://github.com/meishild/hass-custom-components",
   "dependencies": [],
   "codeowners": ["@meishild"],
   "requirements": ["requests", "beautifulsoup4"]
