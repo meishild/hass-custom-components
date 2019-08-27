@@ -34,7 +34,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 
 
 def calc_heat_index(T, RH):
-    '''NOAA计算体感温度 参数为气温(摄氏度)和相对湿度(0~100或者0~1)'''
+    """NOAA计算体感温度 参数为气温(摄氏度)和相对湿度(0~100或者0~1)"""
     if RH < 1:
         RH *= 100
     T = 1.8 * T + 32
@@ -58,11 +58,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     temperatureSensor = config.get(CONF_TS)
     humiditySensor = config.get(CONF_HS)
 
-    devs = []
-
-    devs.append(ApparentTSensor(
-        hass, temperatureSensor, humiditySensor, name))
-
+    devs = [ApparentTSensor(hass, temperatureSensor, humiditySensor, name)]
     add_devices(devs)
 
 
@@ -99,8 +95,6 @@ class ApparentTSensor(Entity):
 
     def update(self):
         """Update state."""
-        t = 0.0
-        h = 0.0
         ttry = self._hass.states.get(self._temperatureSensor).state
         htry = self._hass.states.get(self._humiditySensor).state
         try:
