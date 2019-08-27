@@ -5,7 +5,7 @@
 
 ```yaml
 sensor:
-  - platform: ble_presence
+  - platform: ble-presence
     mac: 11:22:33:aa:bb:cc
     name: test
     friendly_name: test
