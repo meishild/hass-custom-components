@@ -1,0 +1,14 @@
+{
+  "domain": "custom-yeelight",
+  "name": "Yeelight",
+  "documentation": "https://github.com/meishild/hass-custom-components",
+  "requirements": [
+    "yeelight==0.5.0"
+  ],
+  "dependencies": [],
+  "codeowners": [
+    "@rytilahti",
+    "@zewelor",
+    "@meishild"
+  ]
+}
