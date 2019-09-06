@@ -26,10 +26,10 @@ DEFAULT_NAME = 'apparent-temperature'
 CONF_TS = "temperature_sensor"
 CONF_HS = "humidity_sensor"
 
+CONF_SK = "sensors"
+
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-    vol.Required(CONF_TS): cv.string,
-    vol.Required(CONF_HS): cv.string,
+    vol.Required(CONF_SK): cv.ensure_list,
 })
 
 
@@ -54,21 +54,25 @@ def calc_heat_index(T, RH):
 
 def setup_platform(hass, config, add_devices, discovery_info=None):
     """Set up the sensor."""
-    name = config.get(CONF_NAME)
-    temperatureSensor = config.get(CONF_TS)
-    humiditySensor = config.get(CONF_HS)
-
-    devs = [ApparentTSensor(hass, temperatureSensor, humiditySensor, name)]
+    conf_sensors = config.get(CONF_SK)
+    devs = []
+    for conf_sensor in conf_sensors:
+        id = list(conf_sensor.keys())[0]
+        name = conf_sensor[id].get(CONF_NAME)
+        temperatureSensor = conf_sensor[id].get(CONF_TS)
+        humiditySensor = conf_sensor[id].get(CONF_HS)
+        devs.append(ApparentTSensor(hass, id, name, temperatureSensor, humiditySensor))
     add_devices(devs)
 
 
 class ApparentTSensor(Entity):
     """Implementation of a AirCat sensor."""
 
-    def __init__(self, hass, temperatureSensor, humiditySensor, name):
+    def __init__(self, hass, unique_id, name, temperatureSensor, humiditySensor):
         """Initialize the AirCat sensor."""
         self._hass = hass
         self._name = name
+        self._unique_id = unique_id
         self._temperatureSensor = temperatureSensor
         self._humiditySensor = humiditySensor
         self._apparent_temperature = 0
@@ -77,6 +81,11 @@ class ApparentTSensor(Entity):
     def name(self):
         """Return the name of the sensor."""
         return self._name
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        return self._unique_id
 
     @property
     def unit_of_measurement(self):

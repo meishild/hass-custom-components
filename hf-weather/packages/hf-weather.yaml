@@ -1,0 +1,31 @@
+# appkey: '2a8d367c8a84418e8951999cd121dc24'  https://wx.jdcloud.com/market/datas/26/10610   # api平台申请的key
+# 文档地址：https://github.com/cnk700i/ha_modified_components/tree/master/hf_weather
+# 城市编号：https://where.heweather.com/location.html !secret hf_weather_location
+weather:
+  - platform: hf_weather
+    name: hf_name
+    location: !secret hf_weather_location
+    appkey: !secret hf_weather_appkey
+
+sensor:
+  - platform: template
+    sensors:
+      weather_current_temp:
+        friendly_name: "当前温度"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.hf_name', 'temperature') }}"
+      weather_current_uv:
+        friendly_name: "当前紫外线强度"
+        value_template: "{{ state_attr('weather.hf_name', 'uv')['uv'] }}"
+      weather_current_rain:
+        friendly_name: "当前下雨概率"
+        unit_of_measurement: '%'
+        value_template: "{{ state_attr('weather.hf_name', 'forecast')[0]['probable_precipitation'] }}"
+      weather_today_max_temp:
+        friendly_name: "今天最高温度"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.hf_name', 'forecast')[0]['temperature'] }}"
+      weather_today_min_temp:
+        friendly_name: "今天最低温度"
+        unit_of_measurement: '°C'
+        value_template: "{{ state_attr('weather.hf_name', 'forecast')[0]['templow'] }}"

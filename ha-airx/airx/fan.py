@@ -55,8 +55,7 @@ def setup_platform(hass, config, add_devices_callback, discovery_info=None):
 
     _LOGGER.info('============= airx setup -> name: %s =============', name)
     add_devices_callback([
-        AirxFan(hass, name, token, user_id, device_id,
-                AirxController(hass, token, user_id, device_id))
+        AirxFan(hass, name, token, user_id, device_id, AirxController(hass, token, user_id, device_id))
     ])
 
 
@@ -164,8 +163,7 @@ class AirxController(object):
 
 
 class AirxFan(FanEntity):
-    def __init__(self, hass, name: str, token: str, user_id: str,
-                 device_id: str, controller) -> None:
+    def __init__(self, hass, name: str, token: str, user_id: str, device_id: str, controller) -> None:
         self._hass = hass
         self._available = True
         self._name = name

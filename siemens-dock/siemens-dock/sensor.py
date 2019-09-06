@@ -52,17 +52,19 @@ async def async_setup_platform(hass, config, add_devices_callback, discovery_inf
 
     if 'code' not in data or data['code'] != 200:
         raise PlatformNotReady()
-
+    pid = data['body']['PID']
     for variable in config[CONF_DISPLAY_OPTIONS]:
-        dev.append(SiemensSensor(api, variable))
+        unique_id = "sie_%s_%s" % (variable, pid)
+        dev.append(SiemensSensor(unique_id, data, variable))
 
     add_devices_callback(dev, True)
 
 
 # 通用业务类
 class SiemensSensor(Entity):
-    def __init__(self, data, sensor_types):
+    def __init__(self, unique_id, data, sensor_types):
         """Initialize."""
+        self._unique_id = unique_id
         self._data = data
         self._name = SENSOR_TYPES[sensor_types][0]
         self._unit_of_measurement = SENSOR_TYPES[sensor_types][1]
@@ -74,6 +76,11 @@ class SiemensSensor(Entity):
     def name(self):
         """Return the name of the sensor."""
         return "siements_dock_%s" % self._name
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        return self._unique_id
 
     @property
     def state(self):
