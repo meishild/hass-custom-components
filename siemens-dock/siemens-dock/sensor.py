@@ -55,17 +55,17 @@ async def async_setup_platform(hass, config, add_devices_callback, discovery_inf
     pid = data['body']['PID']
     for variable in config[CONF_DISPLAY_OPTIONS]:
         unique_id = "sie_%s_%s" % (variable, pid)
-        dev.append(SiemensSensor(unique_id, data, variable))
+        dev.append(SiemensSensor(unique_id, api, variable))
 
     add_devices_callback(dev, True)
 
 
 # 通用业务类
 class SiemensSensor(Entity):
-    def __init__(self, unique_id, data, sensor_types):
+    def __init__(self, unique_id, api, sensor_types):
         """Initialize."""
         self._unique_id = unique_id
-        self._data = data
+        self._api = api
         self._name = SENSOR_TYPES[sensor_types][0]
         self._unit_of_measurement = SENSOR_TYPES[sensor_types][1]
         self.type = sensor_types
@@ -75,7 +75,7 @@ class SiemensSensor(Entity):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return "siements_dock_%s" % self._name
+        return self._unique_id
 
     @property
     def unique_id(self) -> str:
@@ -120,7 +120,7 @@ class SiemensSensor(Entity):
     async def async_update(self):
         """Update data."""
         try:
-            data = await self._data.update()
+            data = await self._api.update()
             _LOGGER.debug(data)
             if data is None:
                 return

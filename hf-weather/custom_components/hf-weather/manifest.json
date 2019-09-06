@@ -1,5 +1,5 @@
 {
-  "domain": "hf_weather",
+  "domain": "hf-weather",
   "name": "he feng weather",
   "documentation": "https://github.com/meishild/hass-custom-components",
   "requirements": [],
