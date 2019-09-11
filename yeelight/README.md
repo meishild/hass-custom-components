@@ -13,6 +13,7 @@
 custom-yeelight:
   devices:
     10.0.0.64:
+      unique_id: living_lamp2_1
       name: living_room_lamp
       model: lamp2
 ```
