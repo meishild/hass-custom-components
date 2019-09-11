@@ -28,7 +28,8 @@ DATA_YEELIGHT = DOMAIN
 DATA_UPDATED = "yeelight_{}_data_updated"
 DEVICE_INITIALIZED = "{}_device_initialized".format(DOMAIN)
 
-DEFAULT_NAME = "Yeelight"
+DEFAULT_NAME = "yeelight"
+DEFAULT_UNIQUE_ID = "light_001"
 DEFAULT_TRANSITION = 350
 
 CONF_MODEL = "model"
@@ -37,6 +38,7 @@ CONF_SAVE_ON_CHANGE = "save_on_change"
 CONF_MODE_MUSIC = "use_music_mode"
 CONF_FLOW_PARAMS = "flow_params"
 CONF_CUSTOM_EFFECTS = "custom_effects"
+CONF_UNIQUE_ID = "unique_id"
 
 ATTR_COUNT = "count"
 ATTR_ACTION = "action"
@@ -81,6 +83,7 @@ YEELIGHT_FLOW_TRANSITION_SCHEMA = {
 DEVICE_SCHEMA = vol.Schema(
     {
         vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
+        vol.Optional(CONF_UNIQUE_ID, default=DEFAULT_NAME): cv.string,
         vol.Optional(CONF_TRANSITION, default=DEFAULT_TRANSITION): cv.positive_int,
         vol.Optional(CONF_MODE_MUSIC, default=False): cv.boolean,
         vol.Optional(CONF_SAVE_ON_CHANGE, default=False): cv.boolean,
@@ -197,11 +200,17 @@ class YeelightDevice:
         self._device_type = None
         self._available = False
         self._initialized = False
+        self._unique_id = DEFAULT_NAME + "_%s" % config.get(CONF_UNIQUE_ID)
 
     @property
     def bulb(self):
         """Return bulb device."""
         return self._bulb_device
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        return self._unique_id
 
     @property
     def name(self):
