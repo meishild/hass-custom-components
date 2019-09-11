@@ -7,7 +7,11 @@ from homeassistant.components.media_player.const import (
     SUPPORT_PAUSE,
     SUPPORT_PLAY,
     SUPPORT_PREVIOUS_TRACK,
+    SUPPORT_SELECT_SOURCE,
     SUPPORT_TURN_OFF,
+    SUPPORT_TURN_ON,
+    SUPPORT_VOLUME_SET,
+    SUPPORT_VOLUME_MUTE
 )
 from homeassistant.const import (
     CONF_HOST,
@@ -21,22 +25,23 @@ import homeassistant.helpers.config_validation as cv
 
 DEFAULT_NAME = "DuneHD"
 
-CONF_SOURCES = "sources"
-
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_HOST): cv.string,
-        vol.Optional(CONF_SOURCES): vol.Schema({cv.string: cv.string}),
         vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     }
 )
 
 DUNEHD_PLAYER_SUPPORT = (
         SUPPORT_PAUSE
-        | SUPPORT_TURN_OFF
+        # | SUPPORT_TURN_ON
+        # | SUPPORT_TURN_OFF
+        # | SUPPORT_SELECT_SOURCE
         | SUPPORT_PREVIOUS_TRACK
         | SUPPORT_NEXT_TRACK
         | SUPPORT_PLAY
+        | SUPPORT_VOLUME_SET
+        | SUPPORT_VOLUME_MUTE
 )
 
 
@@ -44,11 +49,15 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the DuneHD media player platform."""
     from .pdunehd import DuneHDPlayer
 
-    sources = config.get(CONF_SOURCES, {})
     host = config.get(CONF_HOST)
     name = config.get(CONF_NAME)
+    dune = DuneHDPlayer(host)
+    last_state = dune.get_last_state()
+    sources = {'MainPage': '-1'}
+    for item in last_state['ui_state']['screen']['items']:
+        sources[item['caption']] = item['id']
 
-    add_entities([DuneHDPlayerEntity(DuneHDPlayer(host), name, sources)], True)
+    add_entities([DuneHDPlayerEntity(dune, name, sources)], True)
 
 
 class DuneHDPlayerEntity(MediaPlayerDevice):
@@ -160,12 +169,17 @@ class DuneHDPlayerEntity(MediaPlayerDevice):
                 self._media_title = list(skey)[list(sval).index(pburl)]
             else:
                 self._media_title = pburl
+        elif self._state['android_app_active'] == '1':
+            self._media_title = "Android"
 
-    def select_source(self, source):
-        """Select input source."""
-        self._media_title = source
-        self._state = self._player.launch_media_url(self._sources.get(source))
-        self.schedule_update_ha_state()
+    # def select_source(self, source):
+    #     """Select input source."""
+    #     self._media_title = source
+    #     if source == 'MainPage':
+    #         self._state = self._player.ui_action_return(self._sources.get(source))
+    #     else:
+    #         self._state = self._player.ui_action_enter(self._sources.get(source))
+    #     self.schedule_update_ha_state()
 
     def media_previous_track(self):
         """Send previous track command."""

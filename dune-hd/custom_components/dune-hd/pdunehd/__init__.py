@@ -16,8 +16,14 @@ class DuneHDPlayer():
         self._address = address
         self.update_state()
 
-    def launch_media_url(self, mediaUrl):
-        return self.__send_command('launch_media_url', {'media_url': mediaUrl})
+    def launch_media_url(self, media_url):
+        return self.__send_command('launch_media_url', {'media_url': media_url})
+
+    def ui_action_enter(self, item_id):
+        return self.__send_command('ui_action_enter', {'item_id': item_id})
+
+    def ui_action_return(self, count=-1):
+        return self.__send_command('ui_action_return', {'count': count})
 
     def play(self):
         return self.__change_playback_speed(PLAYBACK_SPEED_PLAY)
