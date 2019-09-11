@@ -14,3 +14,6 @@ airx的空气净化器插件。
 
 ## apparent-components
 根据温度、湿度计算体感温度
+
+## yeelight 
+增加支持小米台灯pro
