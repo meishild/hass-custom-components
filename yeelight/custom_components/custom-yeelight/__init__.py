@@ -23,7 +23,7 @@ from homeassistant.helpers.event import track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = "yeelight"
+DOMAIN = "custom-yeelight"
 DATA_YEELIGHT = DOMAIN
 DATA_UPDATED = "yeelight_{}_data_updated"
 DEVICE_INITIALIZED = "{}_device_initialized".format(DOMAIN)
