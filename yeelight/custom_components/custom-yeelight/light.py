@@ -259,7 +259,7 @@ class YeelightGenericLight(Light):
         model_specs = self._bulb.get_model_specs()
         self._min_mireds = kelvin_to_mired(model_specs["color_temp"]["max"])
         self._max_mireds = kelvin_to_mired(model_specs["color_temp"]["min"])
-
+        self._unique_id = self._device.unique_id
         self._light_type = LightType.Main
 
         if custom_effects:
@@ -311,6 +311,11 @@ class YeelightGenericLight(Light):
     def name(self) -> str:
         """Return the name of the device if any."""
         return self.device.name
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique ID."""
+        return self._unique_id
 
     @property
     def is_on(self) -> bool:
