@@ -11,6 +11,8 @@ PLAYBACK_SPEED_RWD = -512
 STATE_PARSER = re.compile('.*name="(.*)" value="(.*)"')
 
 
+# http://dune-hd.com/support/ip_control/dune_ip_control_overview.txt
+
 class DuneHDPlayer():
     def __init__(self, address):
         self._address = address

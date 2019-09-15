@@ -1,0 +1,10 @@
+{
+  "domain": "sensor41",
+  "name": "sensor41",
+  "documentation": "https://github.com/meishild/hass-custom-components",
+  "dependencies": [],
+  "codeowners": [
+    "@meishild"
+  ],
+  "requirements": []
+}
